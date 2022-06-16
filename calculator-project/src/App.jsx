@@ -1,17 +1,26 @@
+import { useReducer } from 'react';
+import  DigitButton  from './Components/DigitButton';
+import  mathReducers  from './reducers/mathReducers';
+import { ADD_DIGIT } from './constants/mathActions';
 import "./index.css";
 
 function App() {
+
+  const [{currentValue, previousValue, operation}, dispatch] = useReducer(mathReducers,{});
+
+
+
   return (
    <div className="calculator-grid">
      <div className="output">
-        <div className="previous-operand">12 * </div>
-        <div className="current-operand">34</div>
+        <div className="previous-operand">{previousValue}{operation}</div>
+        <div className="current-operand">{currentValue}</div>
      </div>
       <button className="dark-grey-btn">AC</button>
       <button className="dark-grey-btn">+/-</button>
       <button className="dark-grey-btn">%</button>
       <button className="orange-btn">÷</button>
-      <button >9</button>
+      <DigitButton digit="9" dispatch={dispatch}/>
       <button>8</button>
       <button>7</button>
       <button className="orange-btn">*</button>
