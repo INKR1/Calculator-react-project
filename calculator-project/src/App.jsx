@@ -2,7 +2,7 @@ import { useReducer } from 'react';
 import  DigitButton  from './Components/DigitButton';
 import  OperationButton  from './Components/OperationButton';
 import  mathReducers  from './reducers/mathReducers';
-// import { ADD_DIGIT } from './constants/mathActions';
+import { CLEAR } from './constants/mathActions';
 import "./index.css";
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
         <div className="previous-operand">{previousValue}{operation}</div>
         <div className="current-operand">{currentValue}</div>
      </div>
-      <OperationButton operation='AC' dispatch={dispatch}/>
+      <button className='span-two' onClick={() => dispatch({type: CLEAR})}>AC</button>
         <OperationButton operation='+/-' dispatch={dispatch}/>
         <OperationButton operation='%' dispatch={dispatch}/>
       <button className="orange-btn">÷</button>
