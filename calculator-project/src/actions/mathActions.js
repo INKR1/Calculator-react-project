@@ -1,4 +1,4 @@
-import {ADD_DIGIT,  CHOOSE_OPERATION, CLEAR, EVALUATE} from "../constants/mathActions";
+import {ADD_DIGIT, DELETE_DIGIT, CHOOSE_OPERATION, CLEAR, EVALUATE} from "../constants/mathActions";
 
 export function addDigit(digit) {
     return {
@@ -17,6 +17,12 @@ export function chooseOperation(operation) {
 export function clear() {
     return {
         type: CLEAR
+    }
+}
+
+export function deleteDigit() {
+    return {
+        type: DELETE_DIGIT
     }
 }
 

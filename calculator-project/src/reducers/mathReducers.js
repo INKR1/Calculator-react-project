@@ -1,4 +1,4 @@
-import {ADD_DIGIT, CHOOSE_OPERATION, CLEAR, EVALUATE} from "../constants/mathActions";
+import {ADD_DIGIT, CHOOSE_OPERATION, CLEAR, DELETE_DIGIT, EVALUATE} from "../constants/mathActions";
 
 
 export default function mathReducers(state , {type, payload}) {
@@ -8,7 +8,7 @@ export default function mathReducers(state , {type, payload}) {
             if (state.overwrite) {
                 return {
                   ...state,
-                  currentOperand: payload.digit,
+                  currentValue: payload.digit,
                   overwrite: false,
                 }
               }
@@ -27,6 +27,25 @@ export default function mathReducers(state , {type, payload}) {
 
         case CLEAR:
             return{};
+
+        case DELETE_DIGIT:
+            if(state.overwrite) {
+                return {
+                    ...state,
+                    currentValue: null,
+                    overwrite: false
+                }
+            }
+            if(state.currentValue === null) {
+                return state;
+            } 
+            if(state.currentValue.length === 1) {
+                return { ...state, currentValue: null };
+            }
+            return {
+                ...state,
+                currentValue: state.currentValue.slice(0, -1)
+            }
 
         case CHOOSE_OPERATION:
             if(state.currentValue == null && state.previousValue == null) {
