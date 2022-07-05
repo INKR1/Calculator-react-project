@@ -36,7 +36,7 @@ function App() {
       {/* <OperationButton operation="+" dispatch={dispatch} /> */}
       <DigitButton digit="0" dispatch={dispatch} className={'span-two rounded-bl'} />
       <DigitButton digit="." dispatch={dispatch}/>
-      <button className="orange-btn rounded-br" onClick={() => dispatch({type: EVALUATE})}>=</button>
+      <button className="span-two" onClick={() => dispatch({type: EVALUATE})}>=</button>
    </div>
   );
 }
