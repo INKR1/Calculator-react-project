@@ -1,10 +1,17 @@
-import {ADD_DIGIT, CHOOSE_OPERATION, CLEAR} from "../constants/mathActions";
+import {ADD_DIGIT, CHOOSE_OPERATION, CLEAR, EVALUATE} from "../constants/mathActions";
 
 
 export default function mathReducers(state , {type, payload}) {
 
     switch (type) {
         case ADD_DIGIT:
+            if (state.overwrite) {
+                return {
+                  ...state,
+                  currentOperand: payload.digit,
+                  overwrite: false,
+                }
+              }
             if(payload.digit === '0' && state.currentValue === '0') {
                 return state; 
             };
@@ -36,7 +43,7 @@ export default function mathReducers(state , {type, payload}) {
                     ...state,
                     operation: payload.operation,
                     previousValue: state.currentValue,
-                    currentValue: null,
+                    currentValue: null
                 }
             }
 
@@ -44,38 +51,53 @@ export default function mathReducers(state , {type, payload}) {
                 ...state,
                 previousValue: evaluate(state),
                 operation: payload.operation,
-                currentValue: null,
+                currentValue: null
             }
+            case EVALUATE:
+      if (
+        state.operation == null ||
+        state.currentValue == null ||
+        state.previousValue == null
+      ) {
+        return state
+      }
 
-            function evaluate({ currentValue, previousValue, operation }) {
+      return {
+        ...state,
+        overwrite: true,
+        previousValue: null,
+        operation: null,
+        currentValue: evaluate(state),
+      }
+      default:
+  };
+};
+
+function evaluate({ currentValue, previousValue, operation }) {
                 const prev = parseFloat(previousValue);
                 const current = parseFloat(currentValue);
                 
                 if (isNaN(prev) || isNaN(current)) 
-                return ""
-                let computation = ""
-                
-                switch (operation) {
-                  case "+":
+                return "";
+                let computation = "";
+
+                // if (operation === '+/-') {
+                //     if(current.charAt(0) === '-') {
+                //         computation = current.substring(1)
+                //     } else {
+                //         computation = '-' + current
+                //     }
+                // }
+                if(operation === '+') {
                     computation = prev + current
-                    break;
-                  case "-":
+                } else if(operation === '-') {
                     computation = prev - current
-                     break;
-                  case "*":
+                }else if(operation === '*') {
                     computation = prev * current
-                     break;
-                  case "÷":
+                }
+                else if(operation === '÷') {
                     computation = prev / current
-                    break;
-                    default:
-                      break;
-                };
+                }
               return computation.toString()
-            }
-
-        default:
-        };
-    };  
-
+}
     
