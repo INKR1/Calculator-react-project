@@ -9,13 +9,29 @@ function App() {
 
   const [{currentValue, previousValue, operation}, dispatch] = useReducer(mathReducers,{});
   
+  const INTEGER_FORMATER = new Intl.NumberFormat('en-US', {
+    style: 'decimal',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  });
+
+  function formatNumber(number) {
+    if(number == null) 
+      return;
+    const [integer, decimal] = number.split('.');
+    if (decimal == null) 
+      return INTEGER_FORMATER.format(integer);
+    
+    return `${INTEGER_FORMATER.format(integer)}.${decimal}`;
+  };
+
 
   return (
 
    <div className="calculator-grid">
      <div className="output">
-        <div className="previous-operand">{previousValue}{operation}</div>
-        <div className="current-operand">{currentValue}</div>
+        <div className="previous-value">{formatNumber(previousValue)}{operation}</div>
+        <div className="current-value">{formatNumber(currentValue)}</div>
      </div>
       <button className='span-two' onClick={() => dispatch({type: CLEAR})}>AC</button>
       <button onClick={() => dispatch({type: DELETE_DIGIT})}>DEL</button>
@@ -33,12 +49,11 @@ function App() {
       <DigitButton digit="2" dispatch={dispatch}/>
       <DigitButton digit="3" dispatch={dispatch}/>
       <OperationButton operation="+" dispatch={dispatch} />
-      {/* <OperationButton operation="+" dispatch={dispatch} /> */}
       <DigitButton digit="0" dispatch={dispatch} className={'span-two rounded-bl'} />
       <DigitButton digit="." dispatch={dispatch}/>
       <button className="span-two" onClick={() => dispatch({type: EVALUATE})}>=</button>
    </div>
   );
-}
+};
 
 export default App;

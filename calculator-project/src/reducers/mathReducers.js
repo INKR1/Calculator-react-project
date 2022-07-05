@@ -9,7 +9,7 @@ export default function mathReducers(state , {type, payload}) {
                 return {
                   ...state,
                   currentValue: payload.digit,
-                  overwrite: false,
+                  overwrite: false
                 }
               }
             if(payload.digit === '0' && state.currentValue === '0') {
@@ -22,7 +22,7 @@ export default function mathReducers(state , {type, payload}) {
             
             return {
                 ...state,
-                currentValue: `${state.currentValue || ""}${payload.digit}`
+                currentValue: `${state.currentValue || ''}${payload.digit}`
             }; 
 
         case CLEAR:
@@ -34,18 +34,18 @@ export default function mathReducers(state , {type, payload}) {
                     ...state,
                     currentValue: null,
                     overwrite: false
-                }
-            }
+                };
+            };
             if(state.currentValue === null) {
                 return state;
-            } 
+            };
             if(state.currentValue.length === 1) {
                 return { ...state, currentValue: null };
-            }
+            };
             return {
                 ...state,
                 currentValue: state.currentValue.slice(0, -1)
-            }
+            };
 
         case CHOOSE_OPERATION:
             if(state.currentValue == null && state.previousValue == null) {
@@ -54,8 +54,8 @@ export default function mathReducers(state , {type, payload}) {
             if(state.currentValue == null) {
                 return {...state,
                     operation: payload.operation
-                }
-            }
+                };
+            };
 
             if (state.previousValue == null) {
                 return {
@@ -63,15 +63,15 @@ export default function mathReducers(state , {type, payload}) {
                     operation: payload.operation,
                     previousValue: state.currentValue,
                     currentValue: null
-                }
-            }
+                };
+            };
 
             return {
                 ...state,
                 previousValue: evaluate(state),
                 operation: payload.operation,
                 currentValue: null
-            }
+            };
             case EVALUATE:
       if (
         state.operation == null ||
@@ -79,7 +79,7 @@ export default function mathReducers(state , {type, payload}) {
         state.previousValue == null
       ) {
         return state
-      }
+      };
 
       return {
         ...state,
@@ -87,7 +87,7 @@ export default function mathReducers(state , {type, payload}) {
         previousValue: null,
         operation: null,
         currentValue: evaluate(state),
-      }
+      };
       default:
   };
 };
@@ -97,8 +97,8 @@ function evaluate({ currentValue, previousValue, operation }) {
                 const current = parseFloat(currentValue);
                 
                 if (isNaN(prev) || isNaN(current)) 
-                return "";
-                let computation = "";
+                return '';
+                let computation = '';
 
                 // if (operation === '+/-') {
                 //     if(current.charAt(0) === '-') {
@@ -117,6 +117,6 @@ function evaluate({ currentValue, previousValue, operation }) {
                 else if(operation === '÷') {
                     computation = prev / current
                 }
-              return computation.toString()
-}
+              return computation.toString();
+};
     
