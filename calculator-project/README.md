@@ -1,8 +1,9 @@
 # Getting Started with Create React App
 
-### Live view
+## Live view
 
 Click [_here_](https://inkr1.github.io/Calculator-react-project/) for live view
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
